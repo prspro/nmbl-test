@@ -1,10 +1,10 @@
-import React from 'react'
+import Stopwatch from './components/Stopwatch'
 
-type Props = {}
-
-const App = (props: Props) => {
+const App = () => {
   return (
-    <div>App</div>
+    <div className="container">
+      <Stopwatch title="test" value={2222} isPaused={true} />
+    </div>
   )
 }
 
