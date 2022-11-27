@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
-import { addStopwatch } from "../../store/slice/stopwatchSlice";
+import { addStopwatch } from "../../store/slice/appSlice";
 
 // type IUseStopwatchFormProps = {};
 type IUseStopwatchForm = {

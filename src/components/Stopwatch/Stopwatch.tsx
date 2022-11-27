@@ -9,32 +9,35 @@ interface IStopwatchProps {
   title: string;
   value: number;
   isPaused: boolean;
+  id: number;
 }
 
 const Stopwatch: FC<IStopwatchProps> = ({
+  id,
   className,
   title,
   value,
   isPaused,
 }) => {
-  const { computedValue } = useStopwatch({ value });
+  const { computedValue, handleRemove, handlePauseToggle } = useStopwatch({
+    value,
+    id,
+  });
 
   return (
-    <div className={classNames("stopwatch", className)}>
-      <p className="stopwatch__title">
-        {isPaused ? "paused" + title : "not paused" + title}
-      </p>
+    <div className={classNames("stopwatch", className, { active: !isPaused })}>
+      <p className="stopwatch__title">{title}</p>
       <span className="stopwatch__value">{computedValue}</span>
       {isPaused ? (
-        <button className="stopwatch__btn">
+        <button onClick={handlePauseToggle} className="stopwatch__btn">
           <SvgIcon id="pause" />
         </button>
       ) : (
-        <button className="stopwatch__btn">
+        <button onClick={handlePauseToggle} className="stopwatch__btn">
           <SvgIcon id="play" />
         </button>
       )}
-      <button className="stopwatch__btn">
+      <button onClick={handleRemove} className="stopwatch__btn">
         <SvgIcon id="remove" />
       </button>
     </div>

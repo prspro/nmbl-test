@@ -7,25 +7,33 @@ export interface IStopwatch {
   isPaused: boolean;
 }
 
-const initialState: IStopwatch[] = [];
+interface IState {
+  stopwatchList: IStopwatch[];
+}
+
+const initialState:IState = {
+  stopwatchList: [],
+};
 
 export const counterSlice = createSlice({
   name: "stopwatch",
   initialState,
   reducers: {
     addStopwatch: (state, action: PayloadAction<IStopwatch>) => {
-      state.push(action.payload);
+      state.stopwatchList.push(action.payload);
     },
     removeStopwatch: (state, action: PayloadAction<number>) => {
-      state = state.filter((entry) => entry.id !== action.payload);
+      state.stopwatchList = state.stopwatchList.filter((entry) => {
+        return entry.id !== action.payload;
+      });
     },
     incrementStopwatchValue: (state, action: PayloadAction<number>) => {
-      state = state.map((entry) =>
+      state.stopwatchList = state.stopwatchList.map((entry) =>
         entry.id !== action.payload ? entry : { ...entry, value: entry.value++ }
       );
     },
     toggleStopwatch: (state, action: PayloadAction<number>) => {
-      state = state.map((entry) =>
+      state.stopwatchList = state.stopwatchList.map((entry) =>
         entry.id === action.payload
           ? { ...entry, isPaused: !entry.isPaused }
           : entry
@@ -34,6 +42,10 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { addStopwatch, removeStopwatch, incrementStopwatchValue, toggleStopwatch } =
-  counterSlice.actions;
+export const {
+  addStopwatch,
+  removeStopwatch,
+  incrementStopwatchValue,
+  toggleStopwatch,
+} = counterSlice.actions;
 export default counterSlice.reducer;
