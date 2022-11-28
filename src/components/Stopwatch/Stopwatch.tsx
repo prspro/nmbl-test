@@ -6,23 +6,14 @@ import SvgIcon from "../SvgIcon";
 
 interface IStopwatchProps {
   className?: string;
-  title: string;
-  value: number;
-  isPaused: boolean;
   id: number;
 }
 
-const Stopwatch: FC<IStopwatchProps> = ({
-  id,
-  className,
-  title,
-  value,
-  isPaused,
-}) => {
-  const { computedValue, handleRemove, handlePauseToggle } = useStopwatch({
-    value,
-    id,
-  });
+const Stopwatch: FC<IStopwatchProps> = ({ id, className }) => {
+  const { computedValue, title, isPaused, handleRemove, handlePauseToggle } =
+    useStopwatch({
+      id,
+    });
 
   return (
     <div className={classNames("stopwatch", className, { active: !isPaused })}>
@@ -30,11 +21,11 @@ const Stopwatch: FC<IStopwatchProps> = ({
       <span className="stopwatch__value">{computedValue}</span>
       {isPaused ? (
         <button onClick={handlePauseToggle} className="stopwatch__btn">
-          <SvgIcon id="pause" />
+          <SvgIcon id="play" />
         </button>
       ) : (
         <button onClick={handlePauseToggle} className="stopwatch__btn">
-          <SvgIcon id="play" />
+          <SvgIcon id="pause" />
         </button>
       )}
       <button onClick={handleRemove} className="stopwatch__btn">

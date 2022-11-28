@@ -16,20 +16,20 @@ const initialState:IState = {
 };
 
 export const counterSlice = createSlice({
-  name: "stopwatch",
+  name: "app",
   initialState,
   reducers: {
     addStopwatch: (state, action: PayloadAction<IStopwatch>) => {
-      state.stopwatchList.push(action.payload);
+      state.stopwatchList.unshift(action.payload);
     },
     removeStopwatch: (state, action: PayloadAction<number>) => {
       state.stopwatchList = state.stopwatchList.filter((entry) => {
         return entry.id !== action.payload;
       });
     },
-    incrementStopwatchValue: (state, action: PayloadAction<number>) => {
+    incrementStopwatchValue: (state, action: PayloadAction<{id: number; value: number}>) => {
       state.stopwatchList = state.stopwatchList.map((entry) =>
-        entry.id !== action.payload ? entry : { ...entry, value: entry.value++ }
+        entry.id !== action.payload.id ? entry : { ...entry, value: entry.value + action.payload.value }
       );
     },
     toggleStopwatch: (state, action: PayloadAction<number>) => {

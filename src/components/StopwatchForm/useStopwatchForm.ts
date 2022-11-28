@@ -23,7 +23,7 @@ const useStopwatchForm = (): IUseStopwatchForm => {
     dispatch(
       addStopwatch({
         id: new Date().getTime(),
-        value: new Date().getTime(),
+        value: 0,
         title:
           title === ""
             ? `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
