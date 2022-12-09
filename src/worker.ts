@@ -1,39 +1,32 @@
-// import { expose } from 'comlink';
+let i: ReturnType<typeof setInterval> | undefined = undefined;
+let isPaused = true;
 
-// const ticker = {
-//   // tickerList: new Array(),
-//   counter: 0,
-//   // addTicker() {
-//   //   this.tickerList.push("ticker")
-//   // },
-//   inc() {
-//     this.counter++;
-//   },
-//   start() {
-//     const self =  this;
-//     setInterval(() => {
-//       // self.tickerList.forEach(ticker => console.log(ticker));
-//       self.counter++;
-//       console.log(self.counter);
-//     }, 1e3);
-//   }
-// };
+onmessage = function (e) {
+  switch (e.data) {
+    case "start":
+      isPaused = false;
+      i = setInterval(() => {
+        postMessage("tick");
+      }, 1e3);
+      break;
+    case "pause":
+      isPaused = true;
+      clearInterval(i);
+      break;
+    case "toggle":
+      if (isPaused) {
+        isPaused = !isPaused;
+        i = setInterval(() => {
+          postMessage("tick");
+        }, 1e3);
+      } else {
+        isPaused = !isPaused;
+        clearInterval(i);
+      }
+      break;
+    default:
+      break;
+  }
+};
 
-
-
-// export type MyFirstWorker = typeof exports;
-// expose(ticker);
-
-let list = new Array();
-
-onmessage = function(e) {
-  list.push(e.data);
-}
-
-
-setInterval(() => {
-  postMessage("tick");
-  console.log(list);
-}, 1e3);
-
-export {}
+export {};

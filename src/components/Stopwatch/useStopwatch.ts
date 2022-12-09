@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   removeStopwatch,
@@ -20,6 +20,8 @@ type IUseStopwatch = {
 };
 
 const useStopwatch = ({ id }: IUseStopwatchProps): IUseStopwatch => {
+  const { ticker } = useTicker();
+
   const currentStopwatch = useAppSelector(
     (state) => state.app.stopwatchList
   ).find((entry) => entry.id === id);
@@ -56,30 +58,18 @@ const useStopwatch = ({ id }: IUseStopwatchProps): IUseStopwatch => {
     dispatch(removeStopwatch(id));
   };
 
-  // useEffect(() => {
-  //   let i!: ReturnType<typeof setInterval>;
-
-  //   if (!isPaused) {
-  //     i = setInterval(() => {
-  //       dispatch(incrementStopwatchValue({ id: id, value: timeStep }));
-  //     }, timeStep);
-  //   } else {
-  //     clearInterval(i);
-  //   }
-  //   return () => {
-  //     clearInterval(i);
-  //   };
-  // }, [isPaused]);
-
-  const { ticker } = useTicker();
-
   useEffect(() => {
-    ticker.postMessage(id);
     ticker.onmessage = (e) => {
       dispatch(incrementStopwatchValue({ id: id, value: timeStep }));
-      // console.log("stopwatch "+id);
+    };
+    return () => {
+      ticker.terminate();
     };
   }, []);
+
+  useEffect(() => {
+    ticker.postMessage("toggle");
+  }, [isPaused]);
 
   return { computedValue, title, isPaused, handleRemove, handlePauseToggle };
 };
