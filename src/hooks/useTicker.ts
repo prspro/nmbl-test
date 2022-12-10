@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 const initWorker = () => {
   console.log("worker init");
   
-  return new Worker(new URL("./worker.ts", import.meta.url));
+  return new Worker(new URL("../workers/ticker.ts", import.meta.url));
 };
 
 const useTicker = () => {

@@ -5,7 +5,7 @@ import {
   toggleStopwatch,
   incrementStopwatchValue,
 } from "../../store/slice/appSlice";
-import useTicker from "../../useTicker";
+import useTicker from "../../hooks/useTicker";
 const timeStep = 1000; ///stopwatch interwal in ms
 
 type IUseStopwatchProps = {

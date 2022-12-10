@@ -1,7 +1,7 @@
 import Stopwatch from "./components/Stopwatch";
 import StopwatchForm from "./components/StopwatchForm";
 import { useAppSelector } from "./store/hooks";
-import useTicker from "./useTicker";
+import useTicker from "./hooks/useTicker";
 
 const App = () => {
   const stopwatchList = useAppSelector((state) => state.app.stopwatchList);
