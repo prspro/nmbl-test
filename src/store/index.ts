@@ -1,11 +1,24 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from './slice/appSlice';
+import appReducer from './slice/appSlice';
+
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
+
+const persistConfig = {
+  key: 'app',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, appReducer);
 
 export const store = configureStore({
-  reducer: {
-    app: counterReducer,
-  },
-});
+  reducer: persistedReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk]
+})
+
+export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

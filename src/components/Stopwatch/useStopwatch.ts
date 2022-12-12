@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import {
   removeStopwatch,
@@ -21,10 +21,11 @@ type IUseStopwatch = {
 
 const useStopwatch = ({ id }: IUseStopwatchProps): IUseStopwatch => {
   const { ticker } = useTicker();
-
+  
   const currentStopwatch = useAppSelector(
-    (state) => state.app.stopwatchList
+    (state) => state.stopwatchList
   ).find((entry) => entry.id === id);
+
   const stopwatchValue = currentStopwatch?.value || 0;
   const isPaused = currentStopwatch?.isPaused || false;
   const title = currentStopwatch?.title || "";
@@ -68,7 +69,11 @@ const useStopwatch = ({ id }: IUseStopwatchProps): IUseStopwatch => {
   }, []);
 
   useEffect(() => {
-    ticker.postMessage("toggle");
+    if (isPaused) {
+      ticker.postMessage("pause");
+    } else {
+      ticker.postMessage("start");
+    }
   }, [isPaused]);
 
   return { computedValue, title, isPaused, handleRemove, handlePauseToggle };
