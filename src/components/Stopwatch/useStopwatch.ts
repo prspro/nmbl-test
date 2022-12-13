@@ -63,7 +63,6 @@ const useStopwatch = ({ id }: IUseStopwatchProps): IUseStopwatch => {
   };
 
   useEffect(() => {
-
     if (!isPaused) {
       const currentTime = new Date().getTime();
       dispatch(

@@ -6,11 +6,16 @@ const App = () => {
   const stopwatchList = useAppSelector((state) => state.stopwatchList);
 
   return (
-    <div className="container">
-      <StopwatchForm placeholder="Enter tracker name" />
-      {stopwatchList.map((entry) => (
-        <Stopwatch key={entry.id} id={entry.id} />
-      ))}
+    <div className="app container">
+      <h1 className="app__title">tracker</h1>
+      <StopwatchForm placeholder="Enter tracker name" className="app__form" />
+      <ul className="app__stopwatch-list">
+        {stopwatchList.map((entry) => (
+          <li key={entry.id} className="app__stopwatch-item">
+            <Stopwatch id={entry.id} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

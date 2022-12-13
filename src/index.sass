@@ -4,4 +4,29 @@
 
 html
     font-family: 'PT Sans', -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif
-    font-size: 13px
+    font-size: 17px
+
+.app
+    &__title
+        font-weight: bold
+        font-size: 2.85rem
+        margin: 88px 0
+        text-align: center
+    &__form
+        margin-bottom: 24px
+    &__stopwatch-list
+        list-style: none
+        padding: 0
+        margin: 0
+    &__stopwatch-item
+        border-top: 1px solid #e5e5e5
+        &:last-of-type
+            border-bottom: 1px solid #e5e5e5
+
+@media screen and (max-width: 560px)
+    .app
+        &__title
+            font-size: 2.25rem
+            margin: 66px 0
+        &__form
+            margin: 0 13px 24px
