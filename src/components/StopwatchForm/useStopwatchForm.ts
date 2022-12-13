@@ -29,6 +29,7 @@ const useStopwatchForm = (): IUseStopwatchForm => {
             ? `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
             : title,
         isPaused: false,
+        lastTimeAnchorValue: new Date().getTime(),
       })
     );
     setTitle("");

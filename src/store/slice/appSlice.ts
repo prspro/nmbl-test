@@ -5,13 +5,14 @@ export interface IStopwatch {
   title: string;
   id: number;
   isPaused: boolean;
+  lastTimeAnchorValue: number;
 }
 
 interface IState {
   stopwatchList: IStopwatch[];
 }
 
-const initialState:IState = {
+const initialState: IState = {
   stopwatchList: [],
 };
 
@@ -27,9 +28,24 @@ export const counterSlice = createSlice({
         return entry.id !== action.payload;
       });
     },
-    incrementStopwatchValue: (state, action: PayloadAction<{id: number; value: number}>) => {
+    incrementStopwatchValue: (
+      state,
+      action: PayloadAction<{ id: number; value: number }>
+    ) => {
       state.stopwatchList = state.stopwatchList.map((entry) =>
-        entry.id !== action.payload.id ? entry : { ...entry, value: entry.value + action.payload.value }
+        entry.id !== action.payload.id
+          ? entry
+          : { ...entry, value: entry.value + action.payload.value }
+      );
+    },
+    updateLastTimeAnchorValue: (
+      state,
+      action: PayloadAction<{ id: number; value: number }>
+    ) => {
+      state.stopwatchList = state.stopwatchList.map((entry) =>
+        entry.id !== action.payload.id
+          ? entry
+          : { ...entry, lastTimeAnchorValue: action.payload.value }
       );
     },
     toggleStopwatch: (state, action: PayloadAction<number>) => {
@@ -47,5 +63,6 @@ export const {
   removeStopwatch,
   incrementStopwatchValue,
   toggleStopwatch,
+  updateLastTimeAnchorValue,
 } = counterSlice.actions;
 export default counterSlice.reducer;
